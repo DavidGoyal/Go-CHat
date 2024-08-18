@@ -1,7 +1,18 @@
-<div id="chat_room" hx-swap-oob="beforeend">
-  <li id="message" class="flex items-start my-2 p-2 border-b border-gray-300">
-    <h1 class="text-base font-semibold text-red-500 mr-2">{{ .ClientID }}:</h1>
-    <p class="text-base">{{ .Text }}</p>
-  </li>
-  
+<div id="chat_room" hx-swap-oob="beforeend" class="overflow-y-auto">
+	<li
+		class="items-start p-4 border-b border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors duration-150 overflow-y-auto rounded-lg overflow-x-auto"
+		style="width: fit-content; align-self: flex-end"
+	>
+		<div class="flex w-full flex-col space-y-2">
+			<!-- Message Text -->
+			<p class="text-base text-gray-800 mt-1 w-[1/4]">{{ .Text }}</p>
+
+			<div class="flex items-center">
+				<!-- Timestamp -->
+				<span class="text-xs text-gray-500 mr-2">{{ .Time }}</span>
+
+				<!-- Client ID -->
+			</div>
+		</div>
+	</li>
 </div>

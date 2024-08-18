@@ -129,6 +129,6 @@ func (c *Client) readPump() {
 			log.Printf("error: %v", err)
 		}
 
-		c.hub.broadcast <- &Message{ClientID: c.id, Text: msg.Text}
+		c.hub.broadcast <- &Message{ClientID: c.id, Text: msg.Text,Time:time.Now().Format("15:04:05"),}
 	}
 }

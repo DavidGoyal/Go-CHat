@@ -1,40 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<!-- HTMX -->
+		<script
+			src="https://unpkg.com/htmx.org@1.9.10"
+			integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+			crossorigin="anonymous"
+		></script>
+		<!-- HTMX Websockets extension -->
+		<script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>
+		<!-- Tailwind CSS -->
+		<script src="https://cdn.tailwindcss.com"></script>
 
-<head>
-  <!-- HTMX -->
-  <script src="https://unpkg.com/htmx.org@1.9.10"
-    integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
-    crossorigin="anonymous"></script>
-  <!-- HTMX Websockets extension -->
-  <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Go-chat</title>
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Go-chat</title>
-</head>
+		<style>
+			/* Hide scrollbar for WebKit browsers */
+			::-webkit-scrollbar {
+				display: none;
+			}
 
-<body class="bg-gray-200 font-sans flex flex-col h-screen">
-  <header class="bg-blue-600 text-white p-4 text-center">
-    <h1 class="text-4xl font-semibold">Go-chat</h1>
-  </header>
+			/* Hide scrollbar but keep scrolling functionality for all browsers */
+			.scroll-hidden {
+				overflow: hidden;
+			}
 
-  <main class="flex-grow p-4">
-    <div hx-ext="ws" ws-connect="/ws" class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg">
-      <div class="flex flex-col h-full">
-        <ul id="chat_room" hx-swap="beforeend" hx-swap-oob="beforeend" class="overflow-auto p-4">
-          <!-- Messages will be appended here -->
-        </ul>
+			.scroll-auto {
+				overflow-y: auto;
+			}
+			* {
+				box-sizing: border-box;
+			}
+		</style>
+	</head>
 
-        <form id="form" ws-send hx-reset-on-success class="flex p-4 border-t border-gray-300">
-          <input name="text" type="text" class="flex-grow border-2 border-gray-300 p-2 rounded-lg" placeholder="Type your message" required>
-          <button type="submit" class="ml-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Send</button>
-        </form>
-      </div>
-    </div>
-  </main>
-</body>
+	<body class="bg-gray-100 font-sans flex flex-col" style="height: 100vh">
+		<header class="bg-blue-700 text-white p-4 shadow-lg">
+			<h1 class="text-4xl font-semibold text-center">Go-chat</h1>
+		</header>
 
+		<main class="w-full p-6" style="height: 90%">
+			<div
+				hx-ext="ws"
+				ws-connect="/ws"
+				class="max-w-xl mx-auto bg-white rounded-lg shadow-md"
+				style="height: 100%"
+			>
+				<div class="flex flex-col w-full" style="height: 100%">
+					<ul
+						id="chat_room"
+						hx-swap="beforeend"
+						hx-swap-oob="beforeend"
+						class="flex-1 flex-col scroll-auto p-4 space-y-2 overflow-y-auto overflow-x-hidden w-full"
+					>
+						<!-- Messages will be appended here -->
+					</ul>
+
+					<form
+						id="form"
+						ws-send
+						hx-reset-on-success
+						class="flex p-4 border-t border-gray-300 bg-gray-50"
+					>
+						<input
+							name="text"
+							type="text"
+							class="flex-grow border-2 border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+							placeholder="Type your message"
+							required
+						/>
+						<button
+							type="submit"
+							class="ml-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
+						>
+							Send
+						</button>
+					</form>
+				</div>
+			</div>
+		</main>
+	</body>
 </html>
